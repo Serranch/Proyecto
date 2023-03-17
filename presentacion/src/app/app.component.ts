@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ServicioService } from './servicio.service';
+import { UserInsertService } from './createusers.service';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +7,27 @@ import { ServicioService } from './servicio.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'presentacion';
-  responseTest:any;
+  nick_name ='';
+  full_name ='';
 
-  constructor (private t: ServicioService){}
+  constructor (private userInsertService: UserInsertService){}
 
-public ngOnInit() {
-  this.t.test().subscribe(
-    sucess =>{console.log(sucess)
-    this.responseTest=sucess["data"]
-  },
-  err=>{console.log(err)}
-  )
+public onSubmit() {
+  if(this.nick_name ===''|| this.full_name ===''){
+    alert('por favor, llena todos los datos requeridos');
+  }else{
+    const formData = new FormData();
+    formData.append('nick_name', this.nick_name);
+    formData.append('full_name',this.full_name);
+
+    this.userInsertService.postFormData(formData).subscribe(
+      (error) =>{
+        console.log(error);
+      },
+      (success) => {
+        console.log(success);
+      }
+    );
+  }
 }
 }
