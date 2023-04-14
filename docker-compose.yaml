@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  db:
+    image: mysql
+    container_name: mysql-python
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    volumes:
+      # - C:\Users\jgust\Documents\vol:/var/lib/mysql
+        - C:\Users\hinat\Documents\ING_SISTEMAS\vol:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  presentacion:
+    image: presentacion:1.0.0
+    container_name: presentacion
+    ports:
+      - 80:80
+
+  servicios:
+    restart: always
+    image: api:1.0.0
+    container_name: api
+    links:
+      - db
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    # command: python ./servicios/manage.py runserver 0.0.0.0:8000
