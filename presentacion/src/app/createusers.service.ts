@@ -11,7 +11,7 @@ export class UserInsertService{
         const headers = new HttpHeaders({
             'Content-Type': 'application/json', 
         });
-        return this.http.post('http://localhost:8000/users',formData);
+        return this.http.post('http://18.218.70.94:8000/users',formData);
     }
 
     
